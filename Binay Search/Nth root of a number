@@ -1,0 +1,62 @@
+//c++
+int NthRoot(int n, int m) {
+  // Write your code here.
+  int low=1;
+  int high=m;
+  while(low<=high){
+    int mid=(high-low)/2+low;
+    if(pow(mid,n)==m){
+      return mid;
+    }
+    else if(pow(mid,n)<m){
+      low=mid+1;
+    }
+    else{
+      high=mid-1;
+    }
+  }
+  return -1;
+}
+
+//java
+public class Solution {
+    public static int NthRoot(int n, int m) {
+        int low=1;
+        int high=m;
+        while(low<=high){
+            int mid=(high-low)/2+low;
+            // System.out.println(mid);
+            long x=pow(mid,n,m);
+            if(x==m){
+                return mid;
+            }
+            else if(x<m){
+                low=mid+1;
+            }
+            else{
+                high=mid-1;
+            }
+        }
+        return -1;
+    }
+    static int pow(int x, int n, int m){
+        long ans=1;
+        long x2=x;
+        while(n>0){
+            if(n%2==0){
+                x2=x2*x2;
+                if(x2>m){
+                    return m+1;
+                }
+                n/=2;
+            }
+            else{
+                ans*=x2;
+                if(ans>m)
+                return m+1;
+                n--;
+            }
+        }
+        return (int)ans;
+    }
+}
