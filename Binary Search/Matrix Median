@@ -1,0 +1,50 @@
+class Solution{
+    public:
+        int upperBound(vector<int>&mat,int val, int n){
+            int low = 0, high = n - 1;
+            int ans = n;
+    
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            // maybe an answer
+            if (mat[mid] > val) {
+                ans = mid;
+                //look for smaller index on the left
+                high = mid - 1;
+            }
+            else {
+                low = mid + 1; // look on the right
+            }
+        }
+        return ans;
+    
+        }
+        int countLess(vector<vector<int>>&matrix, int m, int n, int mid){
+            int cnt = 0;
+            for (int i = 0; i < m; i++) {
+                cnt += upperBound(matrix[i], mid, n);
+            }
+            return cnt;
+        }
+        int median(vector<vector<int>>&matrix) {
+            int ans=0;
+            int m=matrix.size();
+            int n=matrix[0].size();
+            int low=INT_MAX;
+            int high=INT_MIN;
+            for(int i=0;i<m;i++){
+                low=min(matrix[i][0],low);
+                high=max(matrix[i][n-1],high);
+            }
+            int ind=(m*n)/2;
+            while (low <= high) {
+            int mid = (low + high) / 2;
+            int smallEqual = countLess(matrix, m, n, mid);
+            if (smallEqual <= ind) low = mid + 1;
+            else high = mid - 1;
+        }
+        return low;
+        }
+    
+        
+    };
